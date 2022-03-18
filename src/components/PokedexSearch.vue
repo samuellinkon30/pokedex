@@ -105,7 +105,7 @@ export default {
     },
     verifySearch(){
         this.pesquisas = JSON.parse(localStorage.getItem("pesquias") || '[]')
-        if(this.pesquisas.length!=0 || this.pesquisas != null)
+        if(this.pesquisas.length!=0 ){
             this.hasHistory = true;
             console.log(this.pesquisas);
             this.showSearch(this.pesquisas);
