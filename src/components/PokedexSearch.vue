@@ -32,7 +32,7 @@
     </v-form>
     </v-row>
     <v-row class="title" v-show="hasHistory">
-        <h3>Histórico</h3>
+        <h3>Histórico{{hasHistory}}</h3>
     </v-row>
     <v-row class="globalHistory hidden-sm-and-down">
         <div class="history" v-show="hasHistory">
@@ -104,7 +104,7 @@ export default {
     },
     verifySearch(){
         this.pesquisas = JSON.parse(localStorage.getItem("pesquias") || '[]')
-        if(this.pesquisas!=null){
+        if(this.pesquisas.length!=0){
             this.hasHistory = true;
             console.log(this.pesquisas);
             this.showSearch(this.pesquisas);
@@ -157,7 +157,8 @@ export default {
 .history{
     text-align: center;
     display: flex;
-        flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
 
 }
 .history .card{
@@ -207,6 +208,9 @@ export default {
     text-align: center;
     display: flex;
     flex-wrap: wrap;
+}
+.pesquisa {
+    padding: 5px 20px;
 }
 }
 </style>

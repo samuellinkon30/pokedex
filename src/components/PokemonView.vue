@@ -151,4 +151,9 @@ a.back p{
     margin: 0;
     padding: 0;
 }
+@media only screen and (max-width:600px){
+    .imagem img {
+    width: 400px;
+}
+}
 </style>

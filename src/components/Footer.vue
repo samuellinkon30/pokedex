@@ -47,4 +47,11 @@ export default {
   },
 }
 </script>
-
+<style scoped>
+footer.v-footer.v-sheet.theme--dark.v-footer--padless {
+    /* position: absolute; */
+    bottom: 0;
+    display: block;
+    width: 100%;
+}
+</style>
