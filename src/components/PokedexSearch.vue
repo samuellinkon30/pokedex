@@ -32,7 +32,7 @@
     </v-form>
     </v-row>
     <v-row class="title" v-show="hasHistory">
-        <h3>Histórico{{hasHistory}}</h3>
+        <h3>Histórico</h3>
     </v-row>
     <v-row class="globalHistory hidden-sm-and-down">
         <div class="history" v-show="hasHistory">
@@ -96,6 +96,7 @@ export default {
     }).catch((err)=>{
         this.error = true;
         setInterval(this.ocultar, 4000);
+        this.name = "";
       console.log("Erro: " + err);
     });
     },

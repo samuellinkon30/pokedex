@@ -53,5 +53,6 @@ footer.v-footer.v-sheet.theme--dark.v-footer--padless {
     bottom: 0;
     display: block;
     width: 100%;
+    /* position: fixed; */
 }
 </style>
