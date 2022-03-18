@@ -1,7 +1,6 @@
 <template>
 <div>
-    id: {{ param }}
-    <PokemonView/>
+    <PokemonView :nome="param"/>
 </div>
 </template>
 
