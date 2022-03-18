@@ -13,7 +13,7 @@
 
         <v-spacer></v-spacer>
 
-        <a href="https://github.com/samuellinkon30"
+        <a href="https://github.com/samuellinkon30/pokedex"
           
           v-for="icon in icons"
           :key="icon"

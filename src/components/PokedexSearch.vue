@@ -7,17 +7,17 @@
     </v-row>
     <v-row no-gutters class="line">
     <div class="titlePokedex">
-        <h1>Pesquise se Pokemon</h1>
+        <h1>Pesquise seu Pokémon</h1>
     </div>
     </v-row>
-    <v-row class="pesquisa">
+    <v-row align:center class="pesquisa">
     <v-form
     ref="form"
     lazy-validation
   >
     <v-text-field
       v-model="name"
-      label="Nome do Pokemon"
+      label="Nome do Pokémon"
       required
      
     ></v-text-field>
@@ -31,7 +31,7 @@
     </v-btn>
     </v-form>
     </v-row>
-    <v-row class="title">
+    <v-row class="title" v-show="hasHistory">
         <h3>Histórico</h3>
     </v-row>
     <v-row class="globalHistory hidden-sm-and-down">
@@ -42,6 +42,25 @@
         </div>
         </div>
     </v-row>
+
+      <v-row class="globalHistoryMobile hidden-lg-and-up">
+        <div class="history" v-show="hasHistory">
+           
+        <div class="card" v-for="(pokemon,index) in info" :key="index" @click="goPage(pokemon.nome)">
+            <Card :nome="pokemon.nome" :imagem="pokemon.imagem" />
+        </div>
+        </div>
+    </v-row>
+
+    <div class="error" v-show="error">
+          <v-alert
+      color="red"
+      dark
+    >
+     Pokémon "{{name}}" não encontrado
+    </v-alert>
+    </div> 
+
   </v-container>
  
 </template>
@@ -62,6 +81,7 @@ export default {
           pesquisas:[],
           info:[],
           hasHistory:false,
+          error:false,
       }
   },
   created(){
@@ -69,9 +89,18 @@ export default {
   },
   methods:{
     goPage(link){
+        
+    axios.get('https://pokeapi.co/api/v2/pokemon/'+link).then((response) =>{
         this.setStorageSearch()
         this.$router.push({ name: 'Pokemon', query: { id: link }});
-        
+    }).catch((err)=>{
+        this.error = true;
+        setInterval(this.ocultar, 4000);
+      console.log("Erro: " + err);
+    });
+    },
+    ocultar(){
+        this.error = false;
     },
     verifySearch(){
         this.pesquisas = JSON.parse(localStorage.getItem("pesquias") || '[]')
@@ -97,7 +126,7 @@ export default {
         let aux = history.reverse();
         console.log("Reverse: "+aux)
         aux.forEach((value, index) => {
-        if(index <= 7){
+        if(index <= 6){
         axios.get('https://pokeapi.co/api/v2/pokemon/'+value).then((response) =>{
       
       let pokemonAux = {
@@ -110,12 +139,8 @@ export default {
       console.log("Erro: " + err);
     });
     }
-    else{
-        return false;
-    }
-
+    else{return false;}
     });
- 
   },
 },
 }
@@ -132,9 +157,11 @@ export default {
 .history{
     text-align: center;
     display: flex;
+        flex-wrap: wrap;
+
 }
 .history .card{
-    width: 30%;
+      width: 13%;
     margin: 0 20px;
     cursor: pointer;
 }
@@ -156,6 +183,31 @@ export default {
 }
 .pesquisa{
     display: block;
+}
+.row.globalHistory.hidden-sm-and-down {
+    justify-content: center;
+        margin: 33px 0px;
+}
+.history .v-card__title {
+    justify-content: center;
+    text-transform: capitalize;
+}
+.error {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+}
+@media only screen and (max-width:600px){
+    .history .card {
+    width: 45%;
+    margin: 6px 11px;
+    cursor: pointer;
+}
+.history {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+}
 }
 </style>
 
